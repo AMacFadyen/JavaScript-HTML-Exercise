@@ -6,10 +6,10 @@ var app = function(){
         return cat;
     }
 
-    var createName = function(name){
-        var titleLi = document.createElement('li');
-        titleLi.innerText = name;
-        return titleLi;
+    var createLi = function(field, nameOrFood){
+        var li = document.createElement('li');
+        li.innerText = field + ": " + nameOrFood;
+        return li;
     }
 
     var createFavFood= function(food){
@@ -18,23 +18,22 @@ var app = function(){
         return favFoodLi;
     }
 
-    var createImgFile= function(img){
-        var imgFile = document.createElement('img');
-        imgFile.src = img;
-        return imgFile;
-    }
-
-    var createImgLi = function(createImgFile(img)){
-        var imgLi = document.createElement('li');
-        imgLi.innerText = createImgFile(img);
-        return imgLi;
+    var createImgLi = function(imageSrce){
+        var img = document.createElement('img');
+        img.src = imageSrce;
+        var li = document.createElement("li");
+        li.appendChild(img);
+        return li;
     }
 
 
-    var appendElements = function(nameLi, foodLi, imgLi, catUl){
-        catUl.appendChild(nameLi);
-        catUl.appendChild(foodLi);
-        catUl.appendChild(imgLi);
+    var appendElements = function(ul, liName, liFood, imageLi){
+        ul.appendChild(liName);
+        ul.appendChild(liFood);
+        ul.appendChild(imageLi);
+//what does the two lines below do???
+        var cats = document.querySelector("#cats");
+        cats.appendChild(ul);
     };
 
     var addCat = function(name, favFood, image){
@@ -45,7 +44,25 @@ var app = function(){
         appendElements(nameLi, foodLi, imgLi, catUl);
     }
 
-    addCat("Paw-p-eye", "Spinach", "./pawpeye.jpg");
+    var Cat = function(name, favFood, image){
+        this.name = name;
+        this.favFood = favFood;
+        this.image = image;
+
+    }
+
+    var cat = new Cat("Paw-p-eye", "Spinach", "./pawpeye.jpg");
+
+    var renderCat = function(cat){
+        var ul = createCatUl();
+        var nameLi = createLi("Name", cat.name);
+        var foodLi = createLi("Food", cat.favFood);
+        var imageLi = createImgLi(cat.image);
+
+        appendElements(ul, nameLi, foodLi, imageLi);
+    }
+
+    renderCat(cat);
 
 };
 
